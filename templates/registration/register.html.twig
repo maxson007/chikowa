@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Le chikowa{% endblock %}</title>
+    {% block stylesheets %}
+        {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+        {{ encore_entry_link_tags('app') }}
+
+        <link rel="stylesheet" href="{{ asset('build/register.css') }}">
+    {% endblock %}
+</head>
+<body>
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card card-signin flex-row my-5">
+                    <div class="card-img-left d-none d-md-flex">
+                        <!-- Background image for card set in CSS! -->
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title text-center text-orange font-weight-bolder">Ouvrir un compte</h1>
+                        {% if not registrationForm.vars.valid %}
+                            {{ form_errors(registrationForm) }}
+                        {% endif %}
+                        {{ form_start(registrationForm,{'attr': {'class': 'form-signin'}}) }}
+                            <div class="form-label-group">
+                                {{ form_row(registrationForm.userName, {
+                                    'label': 'Nom Complet',
+                                    'attr':{'placeholder': 'Prénom NOM'},
+                                    'autofocus': true
+                                }) }}
+                            </div>
+
+                            <div class="form-label-group">
+                                {{ form_row(registrationForm.phoneNumber,{
+                                    'label': 'Numéro de téléphone',
+                                    'attr':{'placeholder': '0600XX00XX'},
+                                }) }}
+                            </div>
+                            <div class="form-label-group">
+                                {{ form_row(registrationForm.email,{
+                                    'label': 'Addresse email',
+                                    'attr':{'placeholder': 'example@gmail.fr'},
+                                }) }}
+                            </div>
+
+                            <hr>
+
+                            <div class="form-label-group">
+                                {{ form_row(registrationForm.plainPassword, {
+                                    label: 'Mot de passe'
+                                }) }}
+                            </div>
+
+                            {{ form_row(registrationForm.agreeTerms,{'label': 'J\'accepte les conditions générale'}) }}
+                            <button class="btn btn-lg btn-orange btn-block text-uppercase" type="submit">S'inscrire</button>
+                            <a class="d-block text-center mt-2 small" href="{{ path('app_login') }}">Se connecter</a>
+                            <hr class="my-4">
+{# <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>#}
+                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Se connecter avec Facebook</button>
+                        {{ form_rest(registrationForm) }}
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
+{% endblock %}
+</body>
+</html>

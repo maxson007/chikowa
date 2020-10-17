@@ -1,0 +1,58 @@
+
+@import "~bootswatch/dist/litera/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "carousel.css";
+.text-orange {
+    color:  #fd7e14 !important;
+}
+
+.btn-orange {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-orange:hover {
+    color: #fff;
+    background-color: #f7b346;
+    border-color: #f3a63a;
+}
+
+.btn-orange:focus, .btn-orange.focus {
+    color: #fff;
+    background-color: #e4761f;
+    border-color: #d75b0d;
+    box-shadow: 0 0 0 0.2rem rgba(185, 100, 20, 1);
+}
+
+.btn-orange.disabled, .btn-orange:disabled {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-orange:not(:disabled):not(.disabled):active, .btn-orange:not(:disabled):not(.disabled).active,
+.show > .btn-orange.dropdown-toggle {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-orange:not(:disabled):not(.disabled):active:focus, .btn-orange:not(:disabled):not(.disabled).active:focus,
+.show > .btn-orange.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(185, 100, 20, 1);
+}
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
