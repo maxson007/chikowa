@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Le chikowa - Reset your password{% endblock %}</title>
+    {% block stylesheets %}
+        {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('build/register.css') }}">
+    {% endblock %}
+</head>
+<body>
+<main role="main">
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <h1></h1>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card card-signin flex-row my-5">
+                    <div class="card-img-left-login d-none d-md-flex">
+                        <!-- Background image for card set in CSS! -->
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title text-center text-orange font-weight-bolder mb-3">Réinitialisez votre mot de passe</h1>
+                        {{ form_start(requestForm,{'attr': {'class': 'form-signin'}}) }}
+                        <div class="form-label-group">
+                            {{ form_row(requestForm.email,{'label': 'Votre Addresse email',}) }}
+                        </div>
+                        <div class="text-center">
+                            <small>
+                                Entrez votre adresse e-mail et nous vous enverrons un
+                                lien pour réinitialiser votre mot de passe.
+                            </small>
+                        </div>
+
+                        <button class="btn mt-1 btn-lg btn-orange btn-block text-uppercase">
+                            Réinitialisation du mot de passe
+                        </button>
+                        {{ form_end(requestForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
+{% endblock %}
+</body>
+</html>
