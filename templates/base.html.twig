@@ -24,18 +24,43 @@
             <div class="collapse navbar-collapse" id="navbarColor03">
                 <ul class="navbar-nav mt-2 mt-lg-0 ml-auto">
                     <li class="nav-item">
-                        <a class="btn btn-link text-orange text-decoration-none" href="#">Comment ça marche ?</a>
+                        <a class="nav-link text-orange" href="#">Comment ça marche ?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-link text-orange text-decoration-none" href="#">Chercher un chikowa</a>
+                        <a class="nav-link text-orange" href="#">Chercher un chikowa</a>
                     </li>
+                    {% if app.user is null %}
                     <li class="nav-item">
                         <a href="{{ path('app_login') }}" class="btn btn-link text-orange font-weight-bold text-decoration-none"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('app_register') }}" class="btn btn-orange"><i class="fas fa-user-circle"></i> Ouvrir un compte</a>
                     </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-orange font-weight-bold" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                         <i class="fa fa-user-cog"></i>   Mon Profile
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item text-orange" href="#">
+                                <i class="fa fa-info-circle"></i>
+                                Mes informations
+                            </a>
+                            <a class="dropdown-item text-orange" href="#">
+                                <i class="fa fa-user-secret"></i>
+                                Mot de passe
+                            </a>
+                            <a class="dropdown-item text-orange" href="#">
+                                <i class="fa fa-users"></i> Mon association
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-orange" href="#">
+                              <i class="fa fa-sign-out-alt"></i>  Deconnexion
+                            </a>
+                        </div>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </nav>
