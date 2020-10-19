@@ -1,4 +1,17 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.libelle,{
+        'label': 'Nom de l\'association',
+        'attr':{'placeholder': 'example : Association des étudiants'},
+        'autofocus': true
+    }) }}
+    {{ form_row(form.typeEntite,{
+        'label': 'Type d\'association',
+        'attr':{'placeholder': 'example : Association loi 1901'},
+        'autofocus': true
+    })  }}
+    {{ form_row(form.ville) }}
+    {{ form_row(form.pays) }}
+    {{ form_row(form.localisation) }}
+
+    <button class="btn btn-orange btn-block">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

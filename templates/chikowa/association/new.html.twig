@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Association{% endblock %}
+{% block title %}{{ parent() }} - Je créer l'association{% endblock %}
 
 {% block body %}
-    <h1>Create new Association</h1>
-
-    {{ include('chikowa/association/_form.html.twig') }}
-
-    <a href="{{ path('chikowa_association_index') }}">back to list</a>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6 align-self-center">
+                <h1 class="h2 text-orange mb-3">Je créer l'association</h1>
+                {{ include('chikowa/association/_form.html.twig') }}
+            </div>
+        </div>
+        {# <a href="{{ path('chikowa_association_index') }}">back to list</a> #}
+    </div>
 {% endblock %}

@@ -15,12 +15,13 @@ class DashboardController extends AbstractController
      * @param AssociationRepository $associationRepository
      * @return Response
      */
-    public function index(AssociationRepository $associationRepository) : Response
+    public function index()
     {
         /** @var ChikowaUser $currentUser */
         $currentUser=$this->getUser();
-        if($currentUser->getAssociations()->isEmpty())
-            $this->redirectToRoute('chikowa_association_new');
+        if($currentUser->getAssociations()->isEmpty()){
+            return $this->redirectToRoute('chikowa_association_new');
+        }
         return $this->render('chikowa/dashboard/index.html.twig', [
             'associations' => $currentUser->getAssociations(),
         ]);

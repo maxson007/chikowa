@@ -64,7 +64,7 @@ class ChikowaUser implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="gestionaire")
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="gestionaires")
      */
     private $associations;
 
