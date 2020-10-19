@@ -34,9 +34,15 @@ class Membre
      */
     private $tontines;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="membres")
+     */
+    private $associations;
+
     public function __construct()
     {
         $this->tontines = new ArrayCollection();
+        $this->associations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +95,34 @@ class Membre
     {
         if ($this->tontines->contains($tontine)) {
             $this->tontines->removeElement($tontine);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Association[]
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        if (!$this->associations->contains($association)) {
+            $this->associations[] = $association;
+            $association->addMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->contains($association)) {
+            $this->associations->removeElement($association);
+            $association->removeMembre($this);
         }
 
         return $this;

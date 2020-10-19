@@ -36,7 +36,7 @@
                     <li class="nav-item">
                         <a href="{{ path('app_register') }}" class="btn btn-orange"><i class="fas fa-user-circle"></i> Ouvrir un compte</a>
                     </li>
-                    {% endif %}
+                    {% else %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-orange font-weight-bold" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
                          <i class="fa fa-user-cog"></i>   Mon Profile
@@ -44,7 +44,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item text-orange" href="#">
                                 <i class="fa fa-info-circle"></i>
-                                Mes informations
+                                Mes Informations
                             </a>
                             <a class="dropdown-item text-orange" href="#">
                                 <i class="fa fa-user-secret"></i>
@@ -54,11 +54,12 @@
                                 <i class="fa fa-users"></i> Mon association
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-orange" href="#">
+                            <a class="dropdown-item text-orange" href="{{ path('app_logout') }}">
                               <i class="fa fa-sign-out-alt"></i>  Deconnexion
                             </a>
                         </div>
                     </li>
+                    {% endif %}
                 </ul>
 
             </div>
@@ -70,9 +71,9 @@
 {% endblock %}
 </main>
 <!-- FOOTER -->
-<footer class="container">
-    <p class="float-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2019-2020 Chikowa WaniDev. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+<footer class="container fixed-bottom">
+    <p class="float-right text-orange"><a href="#">Back to top</a></p>
+    <p class="text-orange">&copy; 2019-2020 Chikowa WaniDev. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
 </footer>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Chikowa\Association;
 use App\Repository\ChikowaUserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -59,6 +62,16 @@ class ChikowaUser implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="gestionaire")
+     */
+    private $associations;
+
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -169,6 +182,34 @@ class ChikowaUser implements UserInterface
     public function setUserName($userName): void
     {
         $this->userName = $userName;
+    }
+
+    /**
+     * @return Collection|Association[]
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        if (!$this->associations->contains($association)) {
+            $this->associations[] = $association;
+            $association->addGestionaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->contains($association)) {
+            $this->associations->removeElement($association);
+            $association->removeGestionaire($this);
+        }
+
+        return $this;
     }
 
 
