@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_row(form.libelle,{
         'label': 'Nom de l\'association',
         'attr':{'placeholder': 'example : Association des étudiants'},
@@ -10,8 +10,8 @@
         'autofocus': true
     })  }}
     {{ form_row(form.ville) }}
-    {{ form_row(form.pays) }}
     {{ form_row(form.localisation) }}
-
-    <button class="btn btn-orange btn-block">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.pays) }}
+{{ form_rest(form) }}
+    <button class="btn btn-orange btn-block"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

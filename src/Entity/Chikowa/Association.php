@@ -7,12 +7,28 @@ use App\Repository\Chikowa\AssociationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AssociationRepository::class)
  */
 class Association
 {
+    const ASSOCIATION_TYPE_VALUES = [
+        "association-de-fait-ou-association-non-declaree"=>"Association de fait ou association non déclarée",
+        "association-loi-de-1901"=>"Association loi de 1901",
+        "association-avec-agrement"=>"Association avec agrément",
+        "association-dutilite-publique"=>"Association d'utilité publique",
+        "autre"=>"Autre"
+    ];
+    const ASSOCIATION_TYPE_KEYS = [
+        "association-de-fait-ou-association-non-declaree",
+        "association-loi-de-1901",
+        "association-avec-agrement",
+        "association-dutilite-publique",
+        "autre"
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -22,31 +38,39 @@ class Association
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="3",max="200")
+     * @Assert\NotBlank()
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Choice(choices=Association::ASSOCIATION_TYPE_KEYS)
      */
     private $typeEntite;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $localisation;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\NotBlank()
      */
     private $pays;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $ville;
 
     /**
      * @ORM\ManyToMany(targetEntity=ChikowaUser::class, inversedBy="associations")
+     * @Assert\NotNull()
      */
     private $gestionaires;
 
