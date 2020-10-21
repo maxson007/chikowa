@@ -11,6 +11,8 @@ import './styles/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
 
+require('select2');
+
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
@@ -21,27 +23,23 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
-
-    var $associationLocalisation = $('#association_localisation');
-// When sport gets selected ...
-    $associationLocalisation.change(function() {
-        // ... retrieve the corresponding form.
-        var $form = $(this).closest('form');
-        // Simulate form data, but only include the selected sport value.
-        var data = {};
-        data[$associationLocalisation.attr('name')] = $associationLocalisation.val();
-        // Submit data via AJAX to the form's action path.
-        $.ajax({
+/*    $('select[data-select="true"]').select2({
+        theme: 'bootstrap4',
+    });*/
+    let $associationVille = $('#association_ville');
+    $associationVille.change(function() {
+        let $form = $(this).closest('form');
+        let data = {};
+        data[$associationVille.attr('name')] = $associationVille.val();
+      $.ajax({
             url : $form.attr('action'),
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                // Replace current position field ...
-                $('#association_ville').replaceWith(
-                    // ... with the returned one from the AJAX response.
-                    $(html).find('#association_ville')
+                $('#association_localisation').replaceWith(
+                    $(html).find('#association_localisation')
                 );
-                // Position field now displays the appropriate positions.
+                //$('#ville_group_form').hide('fade');
             }
         });
     });

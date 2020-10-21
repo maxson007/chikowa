@@ -1,4 +1,4 @@
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'id':'association_form'}}) }}
     {{ form_row(form.libelle,{
         'label': 'Nom de l\'association',
         'attr':{'placeholder': 'example : Association des étudiants'},
@@ -7,11 +7,17 @@
     {{ form_row(form.typeEntite,{
         'label': 'Type d\'association',
         'attr':{'placeholder': 'example : Association loi 1901'},
-        'autofocus': true
     })  }}
-    {{ form_row(form.ville) }}
-    {{ form_row(form.localisation) }}
-    {{ form_row(form.pays) }}
+    {{ form_row(form.ville,{
+        'label': 'Ville',
+        'row_attr':{'id':'ville_group_form'}
+    }) }}
+    {{ form_row(form.localisation,{
+        'attr':{'data-select' : 'true'},
+    }) }}
+    {{ form_row(form.pays,{
+        'attr':{'data-select' : 'true'},
+    }) }}
 {{ form_rest(form) }}
     <button class="btn btn-orange btn-block"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

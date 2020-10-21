@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Association
 {
     const ASSOCIATION_TYPE_VALUES = [
-        "association-de-fait-ou-association-non-declaree"=>"Association de fait ou association non déclarée",
         "association-loi-de-1901"=>"Association loi de 1901",
+        "association-de-fait-ou-association-non-declaree"=>"Association de fait ou association non déclarée",
         "association-avec-agrement"=>"Association avec agrément",
         "association-dutilite-publique"=>"Association d'utilité publique",
         "autre"=>"Autre"
