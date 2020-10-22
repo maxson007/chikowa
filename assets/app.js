@@ -23,23 +23,28 @@ require('bootstrap');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
-/*    $('select[data-select="true"]').select2({
+    $('select[data-select="true"]').select2({
         theme: 'bootstrap4',
-    });*/
+    });
+
     let $associationVille = $('#association_ville');
+    let $associationLocalisation=$('#association_localisation');
+    $('#localisation_group_form').hide();
     $associationVille.change(function() {
         let $form = $(this).closest('form');
         let data = {};
         data[$associationVille.attr('name')] = $associationVille.val();
+        data[$associationLocalisation.attr('name')] = $associationLocalisation.val();
       $.ajax({
             url : $form.attr('action'),
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                $('#association_localisation').replaceWith(
-                    $(html).find('#association_localisation')
+                let $localisationGroupForm=$('#localisation_group_form')
+                $localisationGroupForm.replaceWith(
+                    $(html).find('#localisation_group_form')
                 );
-                //$('#ville_group_form').hide('fade');
+                $localisationGroupForm.show('fadeIn');
             }
         });
     });

@@ -66,3 +66,10 @@
     background-color: #fd7e14;
     color:  #ffffff !important;
 }
+/**
+select 2 custo
+ */
+.select2-container--bootstrap4 .select2-results__option--highlighted, .select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected=true] {
+    background-color: #fd7e13;
+    color: #f8f9fa;
+}

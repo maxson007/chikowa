@@ -6,18 +6,20 @@
     }) }}
     {{ form_row(form.typeEntite,{
         'label': 'Type d\'association',
-        'attr':{'placeholder': 'example : Association loi 1901'},
+        'attr':{'placeholder': 'example : Association loi 1901','data-select' : 'true'},
     })  }}
     {{ form_row(form.ville,{
         'label': 'Ville',
+        'attr':{'placeholder': 'Paris , Ouani'},
         'row_attr':{'id':'ville_group_form'}
     }) }}
     {{ form_row(form.localisation,{
-        'attr':{'data-select' : 'true'},
+        'row_attr':{'id':'localisation_group_form'},
+        'attr':{'data-select' : 'true', 'data-minimum-results-for-search':'Infinity'},
     }) }}
-    {{ form_row(form.pays,{
+{#    {{ form_row(form.pays,{
         'attr':{'data-select' : 'true'},
-    }) }}
+    }) }}#}
 {{ form_rest(form) }}
     <button class="btn btn-orange btn-block"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

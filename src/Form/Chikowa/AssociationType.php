@@ -38,8 +38,8 @@ class AssociationType extends AbstractType
             ->add('typeEntite',ChoiceType::class, [
                 "choices"=> array_flip(Association::ASSOCIATION_TYPE_VALUES)
             ])
-            ->add('ville')
-            ->add('pays', CountryType::class);
+            ->add('ville');
+            //->add('pays', CountryType::class);
 
         $formModifier = function (FormInterface $form, $localisation= null) {
             $places = null === $localisation ? [] : $this->streetMapClient->fetchDataByCity($localisation);
@@ -58,17 +58,17 @@ class AssociationType extends AbstractType
                 /** @var Association $association */
                 $association = $event->getData();
 
-                $formModifier($event->getForm(), $association->getLocalisation());
+                $formModifier($event->getForm(), $association->getLocalisation()??"ouani");
             }
         );
         $builder->get('ville')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 $localisation = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $localisation);
+                $formModifier($event->getForm()->getParent(), $localisation??"ouani");
             }
         );
-        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
