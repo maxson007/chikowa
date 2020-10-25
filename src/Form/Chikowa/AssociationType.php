@@ -59,6 +59,15 @@ class AssociationType extends AbstractType
         };
 
         $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formModifier) {
+                $data = $event->getData();
+                $localisation = $data->getLocalisation();
+                $formModifier($event->getForm(), $localisation);
+            }
+        );
+
+        $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
                 $data = $event->getData();

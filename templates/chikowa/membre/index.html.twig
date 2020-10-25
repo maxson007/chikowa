@@ -8,23 +8,24 @@
     <div class="accordion" id="accordionAssociation">
         {% for association in associations %}
         <div class="card">
-            <div class="card-header bg-orange" id="heading-{{ association.id }}">
+            <div class="card-header bg-orange d-flex justify-content-between" id="heading-{{ association.id }}">
                 <h3 class="mb-0">
                     <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ association.id }}" aria-expanded="true" aria-controls="collapse-{{ association.id }}">
                         {{ association.libelle }}
                     </a>
                 </h3>
+                <a href="{{ path('chikowa_association_add_membre',{'id': association.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill"><i class="fa fa-user-plus"> </i></a>
             </div>
 
             <div id="collapse-{{ association.id }}" class="collapse {{ associations.first.id==association.id? "show" }}" aria-labelledby="heading-{{ association.id }}" data-parent="#accordionAssociation">
                 <div class="card-body">
-                    <a href="{{ path('chikowa_association_add_membre',{'id': association.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill"><i class="fa fa-user-plus"> </i></a>
 
                     <table class="table table-hover table">
                         <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Telephone</th>
+                            <th>Tontine</th>
                             <th>actions</th>
                         </tr>
                         </thead>
@@ -35,8 +36,20 @@
                                 <td>{{ membre.nom }}</td>
                                 <td>{{ membre.telephone }}</td>
                                 <td>
-                                    <a href="{{ path('chikowa_membre_show', {'id': membre.id}) }}">show</a>
-                                    <a href="{{ path('chikowa_membre_edit', {'id': membre.id}) }}">edit</a>
+                                    <span class="badge badge-pill badge-secondary">
+                                        Aucune tontine
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ path('chikowa_membre_show', {'id': membre.id}) }}" class="btn btn-outline-orange">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a href="{{ path('chikowa_membre_edit', {'id': membre.id}) }}" class="js-edit-membre btn btn-outline-warning">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                    <a href="{{ path('chikowa_membre_delete', {'id': membre.id}) }}" class="js-edit-membre btn btn-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         {% else %}

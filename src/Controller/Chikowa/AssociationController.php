@@ -88,6 +88,13 @@ class AssociationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $localisation = $association->getLocalisation();
+            $address = explode("-->", $localisation);
+            dump($address);
+            if ($address) {
+                $association->setLocalisation($address[0]);
+                $association->setPlaceId($address[1]);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('chikowa_association_index');

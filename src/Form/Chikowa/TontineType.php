@@ -16,7 +16,6 @@ class TontineType extends AbstractType
             ->add('montantParMembre')
             ->add('frequencePaiement')
             ->add('organisateur')
-            ->add('membres')
         ;
     }
 
