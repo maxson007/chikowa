@@ -1,39 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tontine index{% endblock %}
+{% block title %}TMes Tontines par associations{% endblock %}
 
 {% block body %}
-    <h1>Tontine index</h1>
+    <div class="container mt-5">
+        <h1 class="h3 text-orange">Mes Tontines par associations</h1>
+        <div class="accordion" id="accordionAssociation">
+            {% for association in associations %}
+                <div class="card">
+                    <div class="card-header bg-orange d-flex justify-content-between" id="heading-{{ association.id }}">
+                        <h3 class="mb-0">
+                            <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ association.id }}" aria-expanded="true" aria-controls="collapse-{{ association.id }}">
+                                {{ association.libelle }}
+                            </a>
+                        </h3>
+                    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>MontantParMembre</th>
-                <th>FrequencePaiement</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tontine in tontines %}
-            <tr>
-                <td>{{ tontine.id }}</td>
-                <td>{{ tontine.libelle }}</td>
-                <td>{{ tontine.montantParMembre }}</td>
-                <td>{{ tontine.frequencePaiement }}</td>
-                <td>
-                    <a href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">show</a>
-                    <a href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div id="collapse-{{ association.id }}" class="collapse {{ associations.first.id==association.id? "show" }}" aria-labelledby="heading-{{ association.id }}" data-parent="#accordionAssociation">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Libelle</th>
+                                    <th>MontantParMembre</th>
+                                    <th>FrequencePaiement</th>
+                                    <th>actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for tontine in association.tontines %}
+                                    <tr>
+                                        <td>{{ tontine.libelle }}</td>
+                                        <td>{{ tontine.montantParMembre }}</td>
+                                        <td>{{ tontine.frequencePaiement }}</td>
+                                        <td>
+                                            <a href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">show</a>
+                                            <a href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">edit</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
 
     <a href="{{ path('chikowa_tontine_new') }}">Create new</a>
 {% endblock %}

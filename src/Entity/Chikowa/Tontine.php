@@ -55,6 +55,11 @@ class Tontine
      */
     private $dateDebut;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="tontines")
+     */
+    private $association;
+
     public function __construct()
     {
         $this->dateDebut=new \DateTime();
@@ -109,6 +114,18 @@ class Tontine
     public function setDateDebut(\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getAssociation(): ?Association
+    {
+        return $this->association;
+    }
+
+    public function setAssociation(?Association $association): self
+    {
+        $this->association = $association;
 
         return $this;
     }

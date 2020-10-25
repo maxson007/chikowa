@@ -76,10 +76,16 @@ class Association
      */
     private $placeId;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tontine::class, mappedBy="association")
+     */
+    private $tontines;
+
     public function __construct()
     {
         $this->gestionaires = new ArrayCollection();
         $this->membres = new ArrayCollection();
+        $this->tontines = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -187,6 +193,37 @@ class Association
     public function setPlaceId(string $placeId): self
     {
         $this->placeId = $placeId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tontine[]
+     */
+    public function getTontines(): Collection
+    {
+        return $this->tontines;
+    }
+
+    public function addTontine(Tontine $tontine): self
+    {
+        if (!$this->tontines->contains($tontine)) {
+            $this->tontines[] = $tontine;
+            $tontine->setAssociation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTontine(Tontine $tontine): self
+    {
+        if ($this->tontines->contains($tontine)) {
+            $this->tontines->removeElement($tontine);
+            // set the owning side to null (unless already changed)
+            if ($tontine->getAssociation() === $this) {
+                $tontine->setAssociation(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Controller\Chikowa;
 
 use App\Entity\Chikowa\Tontine;
+use App\Entity\ChikowaUser;
 use App\Form\Chikowa\TontineType;
 use App\Repository\Chikowa\TontineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,10 @@ class TontineController extends AbstractController
      */
     public function index(TontineRepository $tontineRepository): Response
     {
+        /** @var ChikowaUser $user */
+        $user=$this->getUser();
         return $this->render('chikowa/tontine/index.html.twig', [
-            'tontines' => $tontineRepository->findAll(),
+            'associations' => $user->getAssociations(),
         ]);
     }
 
