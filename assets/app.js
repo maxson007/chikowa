@@ -16,7 +16,7 @@ require('select2');
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
-
+require('./js/membres')
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
@@ -26,26 +26,34 @@ $(document).ready(function() {
     $('select[data-select="true"]').select2({
         theme: 'bootstrap4',
     });
+    $('.alert').alert()
 
-    let $associationVille = $('#association_ville');
+    //let $associationVille = $('#association_ville');
     let $associationLocalisation=$('#association_localisation');
-    $('#localisation_group_form').hide();
-    $associationVille.change(function() {
-        let $form = $(this).closest('form');
-        let data = {};
-        data[$associationVille.attr('name')] = $associationVille.val();
-        data[$associationLocalisation.attr('name')] = $associationLocalisation.val();
-      $.ajax({
-            url : $form.attr('action'),
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                let $localisationGroupForm=$('#localisation_group_form')
-                $localisationGroupForm.replaceWith(
-                    $(html).find('#localisation_group_form')
-                );
-                $localisationGroupForm.show('fadeIn');
+    $associationLocalisation.select2({
+        theme: 'bootstrap4',
+        ajax: {
+            url: "https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=100&polygon_svg=1",
+            delay: 250,
+            dataType: 'json',
+            data: function (term) {
+                var query = {
+                    city: term.term
+                }
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            id: item.display_name+'-->'+item.place_id,
+                            text: item.display_name,
+                        }
+                    })
+                };
             }
-        });
+        },
+        minimumInputLength: 1,
+        placeholder: 'Saisir une ville',
     });
 });

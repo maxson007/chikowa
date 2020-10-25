@@ -16,8 +16,8 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string")
      */
     private $id;
 
@@ -33,7 +33,7 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
         $this->initialize($expiresAt, $selector, $hashedToken);
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

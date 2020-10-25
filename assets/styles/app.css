@@ -4,6 +4,7 @@
 @import "~select2/dist/css/select2.css";
 @import "~@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.css";
 @import "carousel.css";
+@import "~bs-stepper/dist/css/bs-stepper.css";
 .text-orange {
     color:  #fd7e14 !important;
 }
@@ -52,7 +53,39 @@
     -ms-user-select: none;
     user-select: none;
 }
+/** Buttonoutline orange fin*/
+.btn-outline-orange {
+    color: #fd7e14;
+    border-color: #fd7e14;
+}
 
+.btn-outline-orange:hover {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-outline-orange:focus, .btn-outline-orange.focus {
+    box-shadow: 0 0 0 0.2rem rgba(185, 100, 20, 1);
+}
+
+.btn-outline-orange.disabled, .btn-outline-orange:disabled {
+    color: #fd7e14;
+    background-color: transparent;
+}
+
+.btn-outline-orange:not(:disabled):not(.disabled):active, .btn-outline-orange:not(:disabled):not(.disabled).active,
+.show > .btn-outline-orange.dropdown-toggle {
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-outline-orange:not(:disabled):not(.disabled):active:focus, .btn-outline-orange:not(:disabled):not(.disabled).active:focus,
+.show > .btn-outline-orange.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(185, 100, 20, 1);
+}
+/** Buttonoutline orange fin*/
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
@@ -72,4 +105,16 @@ select 2 custo
 .select2-container--bootstrap4 .select2-results__option--highlighted, .select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected=true] {
     background-color: #fd7e13;
     color: #f8f9fa;
+}
+
+/** Background */
+
+.bg-orange{
+    background-color: #fd7e14 !important;
+}
+
+a.bg-orange:hover, a.bg-orange:focus,
+button.bg-orange:hover,
+button.bg-orange:focus {
+    background-color: #d75b0d !important;
 }

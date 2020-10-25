@@ -12,8 +12,7 @@
                 <th>Libelle</th>
                 <th>TypeEntite</th>
                 <th>Localisation</th>
-                <th>Pays</th>
-                <th>Ville</th>
+                <th>Place ID</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,8 +23,7 @@
                 <td>{{ association.libelle }}</td>
                 <td>{{ association.typeEntite }}</td>
                 <td>{{ association.localisation }}</td>
-                <td>{{ association.pays }}</td>
-                <td>{{ association.ville }}</td>
+                <td>{{ association.placeId }}</td>
                 <td>
                     <a href="{{ path('chikowa_association_show', {'id': association.id}) }}">show</a>
                     <a href="{{ path('chikowa_association_edit', {'id': association.id}) }}">edit</a>

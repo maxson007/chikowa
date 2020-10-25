@@ -24,12 +24,12 @@
                 <td>{{ association.localisation }}</td>
             </tr>
             <tr>
-                <th>Pays</th>
-                <td>{{ association.pays }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ association.ville }}</td>
+                <th>Gestionaires</th>
+                <td>
+                    {% for gestionaire in association.gestionaires %}
+                    {{ gestionaire.username}}
+                    {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>

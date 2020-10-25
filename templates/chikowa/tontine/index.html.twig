@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tontine index{% endblock %}
+
+{% block body %}
+    <h1>Tontine index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>MontantParMembre</th>
+                <th>FrequencePaiement</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tontine in tontines %}
+            <tr>
+                <td>{{ tontine.id }}</td>
+                <td>{{ tontine.libelle }}</td>
+                <td>{{ tontine.montantParMembre }}</td>
+                <td>{{ tontine.frequencePaiement }}</td>
+                <td>
+                    <a href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">show</a>
+                    <a href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('chikowa_tontine_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% import 'chikowa/membre/_macro_prototype_form.html.twig' as _macro_prototype_form %}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Prénom NOM</th>
+        <th>Telephone</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody class="membres" data-prototype="{{ _macro_prototype_form.printMembreFormRow(form.membres.vars.prototype)|e('html_attr') }}">
+    {% for membreForm in form.membres %}
+    <tr class="js-membre-item">
+       {{ _macro_prototype_form.printMembreFormRow(membreForm) }}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ form_rest(form) }}
+<div class="d-flex justify-content-between">
+    <button class="btn btn-outline-orange"  type="reset"><i class="fa fa-trash-alt fa-align-left"> </i> Annuller</button>
+    <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}

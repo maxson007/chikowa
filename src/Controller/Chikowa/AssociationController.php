@@ -3,9 +3,14 @@
 namespace App\Controller\Chikowa;
 
 use App\Entity\Chikowa\Association;
+use App\Entity\Chikowa\Membre;
+use App\Entity\ChikowaUser;
+use App\Form\Chikowa\AssociationAddMembreType;
 use App\Form\Chikowa\AssociationType;
+use App\Form\Chikowa\MembreType;
 use App\Repository\Chikowa\AssociationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,9 +25,15 @@ class AssociationController extends AbstractController
      */
     public function index(AssociationRepository $associationRepository): Response
     {
-        return $this->render('chikowa/association/index.html.twig', [
-            'associations' => $associationRepository->findAll(),
+        /** @var ChikowaUser $user */
+        $user = $this->getUser();
+        if ($user->getAssociations()->isEmpty()) {
+            $this->redirectToRoute('chikowa_association_new');
+        }
+        return $this->render('chikowa/association/choice_association_index.html.twig', [
+            'associations' => $user->getAssociations(),
         ]);
+
     }
 
     /**
@@ -36,12 +47,22 @@ class AssociationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $localisation = $association->getLocalisation();
+            $address = explode("-->", $localisation);
+            if ($address) {
+                $association->setLocalisation($address[0]);
+                $association->setPlaceId($address[1]);
+            }
+            $association->addGestionaire($this->getUser());
             $entityManager->persist($association);
             $entityManager->flush();
 
-            return $this->redirectToRoute('chikowa_association_index');
+            $this->addFlash(
+                'success',
+                sprintf("L'asociation %s est enregistré avec succès", $association->getLibelle())
+            );
+            return $this->redirectToRoute('chikowa_dashboard');
         }
-
         return $this->render('chikowa/association/new.html.twig', [
             'association' => $association,
             'form' => $form->createView(),
@@ -83,12 +104,41 @@ class AssociationController extends AbstractController
      */
     public function delete(Request $request, Association $association): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$association->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $association->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($association);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('chikowa_association_index');
+    }
+
+    /**
+     * @param Request $request
+     * @param Association $association
+     * @return RedirectResponse|Response
+     * @Route(path="/{id}/membre/new" , name="chikowa_association_add_membre")
+     */
+    public function addMembre(Request $request, Association $association)
+    {
+
+        $form = $this->createForm(AssociationAddMembreType::class, $association);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($association);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                sprintf("Membre enregistré avec succès")
+            );
+            return $this->redirectToRoute('chikowa_membre_index');
+        }
+
+        return $this->render('chikowa/association/new_membre.html.twig', [
+            'membre' => $association,
+            'form' => $form->createView(),
+        ]);
     }
 }

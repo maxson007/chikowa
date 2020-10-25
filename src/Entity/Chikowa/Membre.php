@@ -6,6 +6,7 @@ use App\Repository\Chikowa\MembreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MembreRepository::class)
@@ -14,18 +15,22 @@ class Membre
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="3", max="100")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="20")
      */
     private $telephone;
 
@@ -45,7 +50,7 @@ class Membre
         $this->associations = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

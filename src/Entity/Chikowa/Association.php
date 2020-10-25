@@ -28,11 +28,13 @@ class Association
         "association-dutilite-publique",
         "autre"
     ];
+    const FREE_PLAN_NUMBER_ASSOCIATION=1;
+    const STARTER_PLAN_NUMBER_ASSOCIATION=3;
 
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string")
      */
     private $id;
 
@@ -56,17 +58,6 @@ class Association
      */
     private $localisation;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     * @Assert\NotBlank()
-     */
-    private $pays;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
-     */
-    private $ville;
 
     /**
      * @ORM\ManyToMany(targetEntity=ChikowaUser::class, inversedBy="associations")
@@ -75,9 +66,15 @@ class Association
     private $gestionaires;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Membre::class, inversedBy="associations")
+     * @ORM\ManyToMany(targetEntity=Membre::class, inversedBy="associations",cascade={"persist"})
+     * @Assert\Valid()
      */
     private $membres;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private $placeId;
 
     public function __construct()
     {
@@ -85,7 +82,7 @@ class Association
         $this->membres = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -106,6 +103,10 @@ class Association
     {
         return $this->typeEntite;
     }
+    public function getTypeEntiteLibelle(): ?string
+    {
+        return self::ASSOCIATION_TYPE_VALUES[$this->typeEntite];
+    }
 
     public function setTypeEntite(string $typeEntite): self
     {
@@ -122,30 +123,6 @@ class Association
     public function setLocalisation(string $localisation): self
     {
         $this->localisation = $localisation;
-
-        return $this;
-    }
-
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
-
-    public function setPays(string $pays): self
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
 
         return $this;
     }
@@ -198,6 +175,18 @@ class Association
         if ($this->membres->contains($membre)) {
             $this->membres->removeElement($membre);
         }
+
+        return $this;
+    }
+
+    public function getPlaceId(): ?string
+    {
+        return $this->placeId;
+    }
+
+    public function setPlaceId(string $placeId): self
+    {
+        $this->placeId = $placeId;
 
         return $this;
     }

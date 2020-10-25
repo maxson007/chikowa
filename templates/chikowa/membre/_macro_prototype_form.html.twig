@@ -1,0 +1,15 @@
+{% macro printMembreFormRow(membreForm) %}
+        <td>
+            {{ form_widget(membreForm.nom,{'attr':{'placeholder': 'Mariama'},'label':false}) }}
+            {{ form_errors(membreForm.nom) }}
+        </td>
+        <td>
+            {{ form_widget(membreForm.telephone,{'attr':{'placeholder': '0033 06 56 667 666'},'label':false}) }}
+            {{ form_errors(membreForm.telephone) }}
+        </td>
+        <td>
+            <a href="#" class="js-remove-membre btn btn-danger">
+                <i class="fas fa-user-minus"></i>
+            </a>
+        </td>
+{% endmacro %}

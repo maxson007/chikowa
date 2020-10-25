@@ -20,7 +20,7 @@ class DashboardController extends AbstractController
         /** @var ChikowaUser $currentUser */
         $currentUser=$this->getUser();
         if($currentUser->getAssociations()->isEmpty()){
-            return $this->redirectToRoute('chikowa_association_new');
+           // return $this->redirectToRoute('chikowa_association_new');
         }
         return $this->render('chikowa/dashboard/index.html.twig', [
             'associations' => $currentUser->getAssociations(),

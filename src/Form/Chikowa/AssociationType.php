@@ -3,7 +3,10 @@
 namespace App\Form\Chikowa;
 
 use App\Entity\Chikowa\Association;
+use App\Form\Type\Select2Type;
 use App\OpenStreetMap\Client;
+use phpDocumentor\Reflection\Types\String_;
+use SebastianBergmann\CodeCoverage\Report\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -33,41 +36,36 @@ class AssociationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+
         $builder
             ->add('libelle')
             ->add('typeEntite',ChoiceType::class, [
                 "choices"=> array_flip(Association::ASSOCIATION_TYPE_VALUES)
             ])
-            ->add('ville');
+            ->add('localisation',Select2Type::class, array(
+                'required' => true,
+                'choices' => [$data->getLocalisation() => $data->getId()]
+            ));
             //->add('pays', CountryType::class);
 
-        $formModifier = function (FormInterface $form, $localisation= null) {
-            $places = null === $localisation ? [] : $this->streetMapClient->fetchDataByCity($localisation);
-            $form->add('localisation', ChoiceType::class, [
-                'choices' => $places,
-                'choice_value' => 'placeId',
-                'choice_label' => function($place) {
-                    return $place ;
-                }
+        $formModifier = function (FormInterface $form, ?string $localisation ) {
+            $choices = empty($localisation) ? null : [$localisation => $localisation];
+            $form->add('localisation', Select2Type::class, [
+                'required' => true,
+                'choices' => $choices,
+                'data' => $localisation
             ]);
         };
 
         $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
+            FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($formModifier) {
-                /** @var Association $association */
-                $association = $event->getData();
+                $data = $event->getData();
+                $formModifier($event->getForm(), empty($data['localisation']) ? 0 : $data['localisation']);
+            }
+        );
 
-                $formModifier($event->getForm(), $association->getLocalisation()??"ouani");
-            }
-        );
-        $builder->get('ville')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                $localisation = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $localisation??"ouani");
-            }
-        );
 
     }
 

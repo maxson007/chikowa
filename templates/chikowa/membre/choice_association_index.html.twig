@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Ajouter un Membre{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="col-8">
+                    <h1 class="h2 text-orange mb-3 ">Mes associations</h1>
+
+                    {% for association in associations %}
+                    <div class="card mt-3 border-warning">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ association.libelle }}
+                            </h5>
+                            <p class="card-text">  {{ association.getTypeEntiteLibelle }}</p>
+                            <div class="float-right">
+                                {% set nombreMembre= association.membres|length  %}
+                                {% set nombreGestionaire= association.gestionaires|length  %}
+                                <span class="badge badge-warning badge-pill"> {{ "%count% membre|%count% membres"|trans({"%count%":nombreMembre}) }} </span>
+                                <span class="badge badge-success badge-pill"> {{ "%count% getionaire|%count% getionaires"|trans({"%count%":nombreGestionaire}) }} </span>
+                            </div>
+
+                            <p class="card-text"> <i class="fa fa-map-marked"></i> {{ association.localisation }}</p>
+                            <a href="{{ path('chikowa_association_add_membre',{'id':association.id}) }}"
+                               class="btn btn-orange rounded-pill">
+                                <i class="fa fa-user-plus fa-align-left mr-1"></i> Ajouter membre
+                            </a>
+                            <a href="{{ path('chikowa_association_edit',{'id':association.id}) }}"
+                               class="btn btn-warning rounded-pill">
+                                <i class="fa fa-edit fa-align-left mr-1"></i> Modifier
+                            </a>
+                            <a href="{{ path('chikowa_association_delete',{'id':association.id}) }}"
+                               class="btn btn-danger rounded-pill">
+                                <i class="fa fa-trash-alt fa-align-left mr-1"></i> Supprimmer
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
