@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Tontine</h1>
 
-    {{ include('chikowa_tontine/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('chikowa/tontine/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('chikowa_tontine_index') }}">back to list</a>
 
-    {{ include('chikowa_tontine/_delete_form.html.twig') }}
+    {{ include('chikowa/tontine/_delete_form.html.twig') }}
 {% endblock %}

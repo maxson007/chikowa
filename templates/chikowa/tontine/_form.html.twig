@@ -1,4 +1,19 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.libelle,{
+        'label': 'Donnez un nom à votre chikowa',
+        'attr':{'placeholder': 'example : Chikowa des Mamams'},
+        'autofocus': true
+    }) }}
+    {{ form_row(form.montantParMembre,{
+        'label': 'Le montant payé par membre'
+    }) }}
+    {{ form_row(form.frequencePaiement,{
+        'label': 'La fréquence de paiement',
+        'attr':{'data-select' : 'true'}
+    }) }}
+<div class="d-flex justify-content-between">
+    <button class="btn btn-outline-orange" type="reset"><i class="fa fa-trash-alt fa-align-left"> </i> Annuller</button>
+    <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}
+    </button>
+</div>
 {{ form_end(form) }}

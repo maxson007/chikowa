@@ -24,6 +24,10 @@
                             </div>
 
                             <p class="card-text"> <i class="fa fa-map-marked"></i> {{ association.localisation }}</p>
+                            <a href="{{ path('chikowa_tontine_new',{'id':association.id}) }}"
+                               class="btn btn-primary rounded-pill">
+                                <i class="fa fa-money-check-alt fa-align-left mr-1"></i> Créer un chikowa
+                            </a>
                             <a href="{{ path('chikowa_association_add_membre',{'id':association.id}) }}"
                                class="btn btn-orange rounded-pill">
                                 <i class="fa fa-user-plus fa-align-left mr-1"></i> Ajouter membre

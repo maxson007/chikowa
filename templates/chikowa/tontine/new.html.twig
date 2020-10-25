@@ -3,9 +3,15 @@
 {% block title %}New Tontine{% endblock %}
 
 {% block body %}
-    <h1>Create new Tontine</h1>
-
-    {{ include('chikowa/tontine/_form.html.twig') }}
-
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="col-6">
+                <h1 class="h2 text-orange mb-3">Je crée une Tontine</h1>
+                {{ include('chikowa/tontine/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
     <a href="{{ path('chikowa_tontine_index') }}">back to list</a>
+</div>
 {% endblock %}

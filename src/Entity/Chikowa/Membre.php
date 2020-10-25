@@ -35,18 +35,12 @@ class Membre
     private $telephone;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tontine::class, inversedBy="membres")
-     */
-    private $tontines;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="membres")
      */
     private $associations;
 
     public function __construct()
     {
-        $this->tontines = new ArrayCollection();
         $this->associations = new ArrayCollection();
     }
 
@@ -78,33 +72,7 @@ class Membre
 
         return $this;
     }
-
-    /**
-     * @return Collection|Tontine[]
-     */
-    public function getTontines(): Collection
-    {
-        return $this->membres;
-    }
-
-    public function addTontine(Tontine $tontine): self
-    {
-        if (!$this->tontines->contains($tontine)) {
-            $this->tontines[] = $tontine;
-        }
-
-        return $this;
-    }
-
-    public function removeTontine(Tontine $tontine): self
-    {
-        if ($this->tontines->contains($tontine)) {
-            $this->tontines->removeElement($tontine);
-        }
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|Association[]
      */
