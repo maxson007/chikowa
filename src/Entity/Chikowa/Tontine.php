@@ -49,6 +49,16 @@ class Tontine
      */
     private $frequencePaiement;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\GreaterThanOrEqual(value="today")
+     */
+    private $dateDebut;
+
+    public function __construct()
+    {
+        $this->dateDebut=new \DateTime();
+    }
 
     public function getId(): ?string
     {
@@ -87,6 +97,18 @@ class Tontine
     public function setFrequencePaiement(string $frequencePaiement): self
     {
         $this->frequencePaiement = $frequencePaiement;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }

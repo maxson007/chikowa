@@ -72,7 +72,7 @@ class Membre
 
         return $this;
     }
-    
+
     /**
      * @return Collection|Association[]
      */

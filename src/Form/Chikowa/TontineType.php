@@ -5,6 +5,7 @@ namespace App\Form\Chikowa;
 use App\Entity\Chikowa\Tontine;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +17,10 @@ class TontineType extends AbstractType
         $builder
             ->add('libelle')
             ->add('montantParMembre', NumberType::class)
+            ->add('dateDebut', DateType::class,array(
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd'
+            ))
             ->add('frequencePaiement',ChoiceType::class,array(
                 'choices'=>Tontine::PAYEMENT_FREQUENCE
             ))
