@@ -27,6 +27,12 @@ class Tontine
 
     const PAYEMENT_FREQUENCE_KEYS=['M','10D','W'];
 
+    const TYPE_TONTINE=[
+        'Tontine rotative'=>'rotative',
+        'Tontine à accumulation'=>'accumulation'
+    ];
+    const TYPE_TONTINE_ROTATIVE='rotative';
+    const TYPE_TONTINE_ACCUMULATION='accumulation';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
@@ -56,7 +62,7 @@ class Tontine
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\GreaterThanOrEqual(value="today")
+     * @Assert\GreaterThanOrEqual(value="today" ,groups={"Default"})
      */
     private $dateDebut;
 
@@ -69,6 +75,11 @@ class Tontine
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="tontine")
      */
     private $inscriptions;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $tontineType;
 
     public function __construct()
     {
@@ -172,6 +183,18 @@ class Tontine
                 $inscription->setTontine(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTontineType(): ?string
+    {
+        return $this->tontineType;
+    }
+
+    public function setTontineType(string $tontineType): self
+    {
+        $this->tontineType = $tontineType;
 
         return $this;
     }

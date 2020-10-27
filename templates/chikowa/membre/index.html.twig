@@ -9,7 +9,7 @@
         {% for association in associations %}
         <div class="card">
             <div class="card-header bg-orange d-flex justify-content-between" id="heading-{{ association.id }}">
-                <h3 class="mb-0">
+                <h3 class="mb-0 w-100">
                     <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ association.id }}" aria-expanded="true" aria-controls="collapse-{{ association.id }}">
                         {{ association.libelle }}
                     </a>
@@ -25,7 +25,7 @@
                         <tr>
                             <th>Nom</th>
                             <th>Telephone</th>
-                            <th>Tontine</th>
+                            <th>Inscription Tontine</th>
                             <th>actions</th>
                         </tr>
                         </thead>
@@ -36,9 +36,15 @@
                                 <td>{{ membre.nom }}</td>
                                 <td>{{ membre.telephone }}</td>
                                 <td>
-                                    <span class="badge badge-pill badge-secondary">
-                                        Aucune tontine
+                                    {% for inscription in membre.inscriptions %}
+                                    <span class="badge badge-pill badge-success">
+                                        {{ inscription.tontine.libelle }}
                                     </span>
+                                    {% else %}
+                                    <span class="badge badge-pill badge-warning">
+                                        Aucune inscription
+                                    </span>
+                                    {% endfor %}
                                 </td>
                                 <td>
                                     <a href="{{ path('chikowa_membre_show', {'id': membre.id}) }}" class="btn btn-outline-orange">

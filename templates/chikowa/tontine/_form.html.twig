@@ -9,6 +9,10 @@
         'attr':{'placeholder': 'example : 200'},
 
     }) }}
+    {{ form_row(form.tontineType,{
+        'label': 'Le type',
+        'attr':{'data-select' : 'true'}
+    }) }}
 
     {{ form_row(form.frequencePaiement,{
         'label': 'La fréquence de paiement',

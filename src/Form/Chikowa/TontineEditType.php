@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TontineType extends AbstractType
+class TontineEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,8 @@ class TontineType extends AbstractType
             ->add('montantParMembre', MoneyType::class)
             ->add('dateDebut', DateType::class,array(
                 'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd'
+                'format' => 'yyyy-MM-dd',
+                'attr'=>[ 'desabled'=>true]
             ))
             ->add('tontineType',ChoiceType::class,array(
                 'choices'=>Tontine::TYPE_TONTINE

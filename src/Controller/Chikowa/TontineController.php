@@ -5,6 +5,7 @@ namespace App\Controller\Chikowa;
 use App\Entity\Chikowa\Association;
 use App\Entity\Chikowa\Tontine;
 use App\Entity\ChikowaUser;
+use App\Form\Chikowa\TontineEditType;
 use App\Form\Chikowa\TontineType;
 use App\Repository\Chikowa\TontineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -71,7 +72,7 @@ class TontineController extends AbstractController
      */
     public function edit(Request $request, Tontine $tontine): Response
     {
-        $form = $this->createForm(TontineType::class, $tontine);
+        $form = $this->createForm(TontineEditType::class, $tontine);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

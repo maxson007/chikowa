@@ -5,7 +5,7 @@
     <thead>
     <tr>
         <th>Prénom NOM</th>
-        <th>Telephone</th>
+        <th>Téléphone</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -19,7 +19,7 @@
 </table>
 {{ form_rest(form) }}
 <div class="d-flex justify-content-between">
-    <a href="{{ path('chikowa_membre_index') }}" class="btn btn-outline-orange"  type="reset"><i class="fa fa-arrow-left fa-align-left"> </i> Retour</a>
+    <a href="{{ path('chikowa_membre_index') }}" class="btn btn-outline-orange"  type="reset"><i class="fa fa-arrow-left fa-align-left"> </i>Retour Liste</a>
     <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}
