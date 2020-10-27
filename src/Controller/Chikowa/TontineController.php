@@ -2,6 +2,7 @@
 
 namespace App\Controller\Chikowa;
 
+use App\Entity\Chikowa\Association;
 use App\Entity\Chikowa\Tontine;
 use App\Entity\ChikowaUser;
 use App\Form\Chikowa\TontineType;
@@ -29,11 +30,15 @@ class TontineController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="chikowa_tontine_new", methods={"GET","POST"})
+     * @Route("/creation/association/{id}", name="chikowa_tontine_creation_association", methods={"GET","POST"})
+     * @param Association $association
+     * @param Request $request
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function creerUneTontinePourAssociation(Association $association, Request $request): Response
     {
         $tontine = new Tontine();
+        $tontine->setAssociation($association);
         $form = $this->createForm(TontineType::class, $tontine);
         $form->handleRequest($request);
 

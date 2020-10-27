@@ -6,10 +6,15 @@ use App\Repository\Chikowa\TontineRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TontineRepository::class)
+ * @UniqueEntity(
+ *     fields={"libelle","association"},
+ *     errorPath="libelle"
+ * )
  */
 class Tontine
 {
@@ -60,9 +65,15 @@ class Tontine
      */
     private $association;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="tontine")
+     */
+    private $inscriptions;
+
     public function __construct()
     {
         $this->dateDebut=new \DateTime();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -98,6 +109,10 @@ class Tontine
     {
         return $this->frequencePaiement;
     }
+    public function getFrequencePaiementLibelle(): ?string
+    {
+        return array_flip(self::PAYEMENT_FREQUENCE)[$this->frequencePaiement];
+    }
 
     public function setFrequencePaiement(string $frequencePaiement): self
     {
@@ -126,6 +141,37 @@ class Tontine
     public function setAssociation(?Association $association): self
     {
         $this->association = $association;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setTontine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->contains($inscription)) {
+            $this->inscriptions->removeElement($inscription);
+            // set the owning side to null (unless already changed)
+            if ($inscription->getTontine() === $this) {
+                $inscription->setTontine(null);
+            }
+        }
 
         return $this;
     }

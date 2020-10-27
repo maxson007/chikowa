@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TMes Tontines par associations{% endblock %}
+{% block title %}Mes Tontines par associations{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -9,7 +9,7 @@
             {% for association in associations %}
                 <div class="card">
                     <div class="card-header bg-orange d-flex justify-content-between" id="heading-{{ association.id }}">
-                        <h3 class="mb-0">
+                        <h3 class="mb-0 w-100">
                             <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ association.id }}" aria-expanded="true" aria-controls="collapse-{{ association.id }}">
                                 {{ association.libelle }}
                             </a>
@@ -22,8 +22,9 @@
                                 <thead>
                                 <tr>
                                     <th>Libelle</th>
-                                    <th>MontantParMembre</th>
-                                    <th>FrequencePaiement</th>
+                                    <th>Montant Par Membre</th>
+                                    <th>Frequence Paiement</th>
+                                    <th>Nombre d'inscrits</th>
                                     <th>actions</th>
                                 </tr>
                                 </thead>
@@ -31,8 +32,15 @@
                                 {% for tontine in association.tontines %}
                                     <tr>
                                         <td>{{ tontine.libelle }}</td>
-                                        <td>{{ tontine.montantParMembre }}</td>
-                                        <td>{{ tontine.frequencePaiement }}</td>
+                                        <td>
+                                            <span class="badge badge-danger rounded-pill font-weight-bolder">{{ tontine.montantParMembre | format_currency('EUR') }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-info">{{ tontine.frequencePaiementLibelle }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-secondary">{{ tontine.inscriptions|length }}</span>
+                                        </td>
                                         <td>
                                             <a href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">show</a>
                                             <a href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">edit</a>
@@ -40,10 +48,27 @@
                                     </tr>
                                 {% else %}
                                     <tr>
-                                        <td colspan="5">no records found</td>
+                                        <td colspan="6">no records found</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-right">
+                                        {% if not association.tontines.empty %}
+                                        <a class="btn rounded-pill btn-outline-info" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
+                                            <i class="fas fa-user-friends"></i> Afficher les participants
+                                        </a>
+                                        <a class="btn rounded-pill btn-info" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
+                                            <i class="fas fa-user-plus"></i> Ajouter un participant
+                                        </a>
+                                        {% endif %}
+                                        <a class="btn rounded-pill btn-orange" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
+                                            <i class="fa fa-euro-sign"></i> Creer une nouvelle tontine
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
 
                         </div>
@@ -52,10 +77,4 @@
             {% endfor %}
         </div>
     </div>
-
-
-
-
-
-    <a href="{{ path('chikowa_tontine_new') }}">Create new</a>
 {% endblock %}
