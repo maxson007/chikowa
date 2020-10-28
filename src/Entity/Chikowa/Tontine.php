@@ -42,21 +42,21 @@ class Tontine
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\Length(min="3",max="100")
-     * @Assert\NotBlank()
+     * @Assert\Length(min="3",max="100",groups={"Default", "edit"})
+     * @Assert\NotBlank(groups={"Default", "edit"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThan(value="0")
+     * @Assert\NotBlank(groups={"Default", "edit"})
+     * @Assert\GreaterThan(value="0",groups={"Default", "edit"})
      */
     private $montantParMembre;
 
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\Choice(choices=Tontine::PAYEMENT_FREQUENCE_KEYS)
+     * @Assert\Choice(choices=Tontine::PAYEMENT_FREQUENCE_KEYS,groups={"Default", "edit"})
      */
     private $frequencePaiement;
 
@@ -97,7 +97,7 @@ class Tontine
         return $this->libelle;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
 

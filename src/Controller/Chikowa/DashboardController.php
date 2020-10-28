@@ -22,8 +22,18 @@ class DashboardController extends AbstractController
         if($currentUser->getAssociations()->isEmpty()){
            // return $this->redirectToRoute('chikowa_association_new');
         }
+        $nombreTontine =0;
+        $nombreMembre=0;
+
+        foreach ($currentUser->getAssociations() as $association){
+            $nombreTontine+=$association->getTontines()->count();
+            $nombreMembre+=$association->getMembres()->count();
+        }
+
         return $this->render('chikowa/dashboard/index.html.twig', [
             'associations' => $currentUser->getAssociations(),
+            'nombreTontine'=>$nombreTontine,
+            'nombreMembre'=>$nombreMembre
         ]);
     }
 }

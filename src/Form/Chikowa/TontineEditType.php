@@ -21,7 +21,7 @@ class TontineEditType extends AbstractType
             ->add('dateDebut', DateType::class,array(
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
-                'attr'=>[ 'desabled'=>true]
+                'attr'=>[ 'desabled'=>true, 'readonly'=>true]
             ))
             ->add('tontineType',ChoiceType::class,array(
                 'choices'=>Tontine::TYPE_TONTINE
@@ -35,6 +35,7 @@ class TontineEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'validation_groups' => ['edit'],
             'data_class' => Tontine::class,
         ]);
     }

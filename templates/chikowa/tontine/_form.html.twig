@@ -23,8 +23,7 @@
     'label': 'Date de démarrage'
 }) }}
 <div class="d-flex justify-content-between">
-    <button class="btn btn-outline-orange" type="reset"><i class="fa fa-trash-alt fa-align-left"> </i> Annuller</button>
-    <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}
-    </button>
+    <a class="btn btn-outline-orange" href="{{ path('chikowa_tontine_index') }}"> <i class="fa fa-arrow-left fa-align-left"> </i> back to list</a>
+    <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}
