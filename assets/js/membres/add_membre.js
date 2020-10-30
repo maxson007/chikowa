@@ -27,13 +27,6 @@ $(document).ready(function() {
             .remove();
     });
 
-    $collectionHolder.on('click', '.js-edit-membre', function(e) {
-        e.preventDefault();
-        let line=$(this).closest('.js-membre-item');
-            line.find('input').each(function (){
-                $(this).removeAttr( "disabled" );
-            });
-    });
 });
 function addMembreForm($collectionHolder, $newMembreTr) {
     // Get the data-prototype explained earlier

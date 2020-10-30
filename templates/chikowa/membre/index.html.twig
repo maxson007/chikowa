@@ -27,6 +27,7 @@
                             <th>Nom</th>
                             <th>Telephone</th>
                             <th>Inscription Tontine</th>
+                            <th>Position</th>
                             <th>actions</th>
                         </tr>
                         </thead>
@@ -48,6 +49,11 @@
                                     {% endfor %}
                                 </td>
                                 <td>
+                                    <span class="badge badge-pill badge-info">
+                                    {{ inscription.positionRecuperation }}
+                                    </span>
+                                </td>
+                                <td>
                                     <a href="{{ path('chikowa_membre_show', {'id': inscription.membre.id}) }}" class="btn btn-outline-orange">
                                         <i class="fa fa-eye"></i>
                                     </a>
@@ -61,14 +67,14 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="4">Aucun enregistrement trouvé</td>
+                                <td colspan="5">Aucun enregistrement trouvé</td>
                             </tr>
                         {% endfor %}
 
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4" class="text-right">
+                            <td colspan="5" class="text-right">
                                 <a href="{{ path('chikowa_tontine_add_membre',{'id': tontine.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill">
                                     <i class="fa fa-user-plus"> </i> Inscrire un Membre
                                 </a>

@@ -2,11 +2,13 @@
 
 namespace App\Entity\Chikowa;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Chikowa\TontineRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,6 +17,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     fields={"libelle","association"},
  *     errorPath="libelle"
  * )
+ * @ApiResource(attributes={
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}}
+ * })
  */
 class Tontine
 {
@@ -73,6 +79,8 @@ class Tontine
 
     /**
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="tontine",cascade={"persist"}))
+     * @ORM\OrderBy({"positionRecuperation" = "ASC"})
+     * @Assert\Valid()
      */
     private $inscriptions;
 

@@ -2,15 +2,21 @@
 
 namespace App\Entity\Chikowa;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\ChikowaUser;
 use App\Repository\Chikowa\AssociationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AssociationRepository::class)
+ * @ApiResource(attributes={
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}}
+ * })
  */
 class Association
 {
@@ -35,6 +41,7 @@ class Association
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string")
+     * @Groups({"read"})
      */
     private $id;
 
@@ -42,6 +49,7 @@ class Association
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="3",max="200")
      * @Assert\NotBlank()
+     * @Groups({"read", "write"})
      */
     private $libelle;
 
@@ -49,12 +57,14 @@ class Association
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Choice(choices=Association::ASSOCIATION_TYPE_KEYS)
+     * @Groups({"read", "write"})
      */
     private $typeEntite;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Groups({"read", "write"})
      */
     private $localisation;
 

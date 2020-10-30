@@ -40,10 +40,10 @@ class InscriptionController extends AbstractController
      */
     public function listeMembre( Tontine $tontine, InscriptionRepository $inscriptionRepository,SerializerInterface $serializer){
 
-       $membres= $inscriptionRepository->findBy([
-            'tontine'=>$tontine->getId()
+       $inscription= $inscriptionRepository->findBy([
+            'tontine'=>$tontine
         ]);
-       return new JsonResponse($serializer->serialize($membres, 'json'));
+       return new JsonResponse($serializer->serialize($inscription, 'json'));
     }
 
     /**

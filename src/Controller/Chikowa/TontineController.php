@@ -118,20 +118,21 @@ class TontineController extends AbstractController
 
         $form = $this->createForm(TontineAddMembreType::class, $tontine);
         $form->handleRequest($request);
-
+        $lastInscription=$tontine->getInscriptions()->last();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($tontine);
             $entityManager->flush();
             $this->addFlash(
                 'success',
-                sprintf("Membre enregistré avec succès")
+                sprintf("Membre Inscrit avec succès")
             );
             return $this->redirectToRoute('chikowa_membre_index');
         }
 
         return $this->render('chikowa/membre/new_membre.html.twig', [
             'form' => $form->createView(),
+            'lastInscription' => $lastInscription
         ]);
     }
 }

@@ -6,10 +6,11 @@
     <tr>
         <th>Prénom NOM</th>
         <th>Téléphone</th>
+        <th>Position récupération</th>
         <th>actions</th>
     </tr>
     </thead>
-    <tbody class="membres" data-prototype="{{ _macro_prototype_form.printMembreFormRow(form.inscriptions.vars.prototype)|e('html_attr') }}">
+    <tbody data-last-position="{{ lastInscription.positionRecuperation }}" class="membres" data-prototype="{{ _macro_prototype_form.printMembreFormRow(form.inscriptions.vars.prototype)|e('html_attr') }}">
     {% for membreForm in form.inscriptions %}
     <tr class="js-membre-item">
        {{ _macro_prototype_form.printMembreFormRow(membreForm) }}
@@ -19,7 +20,7 @@
 </table>
 {{ form_rest(form) }}
 <div class="d-flex justify-content-between">
-    <a href="{{ path('chikowa_membre_index') }}" class="btn btn-outline-orange"  type="reset"><i class="fa fa-arrow-left fa-align-left"> </i>Retour Liste</a>
+    <a href="{{ path('chikowa_membre_index') }}" class="btn btn-outline-orange"  type="reset"><i class="fa fa-arrow-left fa-align-left"> </i> Retour Liste</a>
     <button class="btn btn-orange"><i class="fa fa-save fa-align-left"> </i> {{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}

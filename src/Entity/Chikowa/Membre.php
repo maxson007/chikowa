@@ -2,14 +2,23 @@
 
 namespace App\Entity\Chikowa;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Chikowa\MembreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MembreRepository::class)
+ * @UniqueEntity(fields={"telephone"})
+ * @ApiResource(attributes={
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}}
+ * })
  */
 class Membre
 {
@@ -17,6 +26,7 @@ class Membre
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string")
+     * @Groups({"read"})
      */
     private $id;
 
@@ -24,19 +34,23 @@ class Membre
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(min="3", max="100")
+     * @Groups({"read", "write"})
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="20")
+     * @Groups({"read", "write"})
      */
     private $telephone;
 
 
     /**
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="membre",cascade={"persist"}))
+     * @Groups({"read"})
+     * @ApiProperty(attributes={"fetchEager": true})
      */
     private $inscriptions;
 
