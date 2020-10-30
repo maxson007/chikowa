@@ -10,7 +10,7 @@
                     <div class="col-5">
                         <a href="{{ path('chikowa_association_new') }}" class="btn btn-block btn-outline-orange font-weight-bolder btn-lg">
                             <i class="fa fa-users"></i>
-                             Créer une association pour commenncer
+                             Créer une association
                         </a>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                             <div class="card-body text-center">
                                 <i class="fa fa-5x fa-hands-helping"></i>
                                 <h4 class="card-title">
-                                    {{ "Mon association|Mes associations"|trans({"%count%":nombreAssociation}) }}
+                                    {{ "Mon Association|Mes Associations"|trans({"%count%":nombreAssociation}) }}
                                 </h4>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ "%count% Association|%count% Associations"|trans({"%count%":nombreAssociation}) }}</h6>
                             </div>
@@ -34,7 +34,7 @@
                         <a href="{{ path('chikowa_tontine_index') }}" class="card-hover text-decoration-none">
                             <div class="card-body text-center">
                                 <i class="fa fa-5x fa-euro-sign"></i>
-                                <h4 class="card-title">Tontine</h4>
+                                <h4 class="card-title">{{ "Tontine|Mes Tontines"|trans({"%count%": nombreTontine}) }}</h4>
                                 <h6 class="card-subtitle mb-2 text-muted"> {{ "%count% Tontine|%count% Tontines"|trans({"%count%": nombreTontine}) }}</h6>
                             </div>
                         </a>
@@ -45,7 +45,7 @@
                         <a href="{{ path('chikowa_membre_index') }}" class="card-hover text-decoration-none">
                             <div class="card-body text-center">
                                 <i class="fa fa-5x fa-users"></i>
-                                <h4 class="card-title">Membres</h4>
+                                <h4 class="card-title">{{ "Membre|%count% Les Membres"|trans({"%count%": nombreMembre}) }}</h4>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ "%count% Membre|%count% Membres"|trans({"%count%": nombreMembre}) }}</h6>
                             </div>
                         </a>

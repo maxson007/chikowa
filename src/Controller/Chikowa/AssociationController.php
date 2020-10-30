@@ -5,7 +5,7 @@ namespace App\Controller\Chikowa;
 use App\Entity\Chikowa\Association;
 use App\Entity\Chikowa\Membre;
 use App\Entity\ChikowaUser;
-use App\Form\Chikowa\AssociationAddMembreType;
+use App\Form\Chikowa\TontineAddMembreType;
 use App\Form\Chikowa\AssociationType;
 use App\Form\Chikowa\MembreType;
 use App\Repository\Chikowa\AssociationRepository;
@@ -120,32 +120,4 @@ class AssociationController extends AbstractController
         return $this->redirectToRoute('chikowa_association_index');
     }
 
-    /**
-     * @param Request $request
-     * @param Association $association
-     * @return RedirectResponse|Response
-     * @Route(path="/{id}/membre/new" , name="chikowa_association_add_membre")
-     */
-    public function addMembre(Request $request, Association $association)
-    {
-
-        $form = $this->createForm(AssociationAddMembreType::class, $association);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($association);
-            $entityManager->flush();
-            $this->addFlash(
-                'success',
-                sprintf("Membre enregistré avec succès")
-            );
-            return $this->redirectToRoute('chikowa_membre_index');
-        }
-
-        return $this->render('chikowa/association/new_membre.html.twig', [
-            'membre' => $association,
-            'form' => $form->createView(),
-        ]);
-    }
 }

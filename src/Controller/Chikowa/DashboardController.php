@@ -11,23 +11,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     /**
+     * @Route("/chikowa/", name="chikowa_dashboard_index")
      * @Route("/chikowa/dashboard", name="chikowa_dashboard")
-     * @param AssociationRepository $associationRepository
      * @return Response
      */
     public function index()
     {
         /** @var ChikowaUser $currentUser */
         $currentUser=$this->getUser();
-        if($currentUser->getAssociations()->isEmpty()){
-           // return $this->redirectToRoute('chikowa_association_new');
-        }
         $nombreTontine =0;
         $nombreMembre=0;
 
         foreach ($currentUser->getAssociations() as $association){
             $nombreTontine+=$association->getTontines()->count();
-            $nombreMembre+=$association->getMembres()->count();
+            foreach ($association->getTontines() as $tontine) {
+                $nombreMembre += $tontine->getInscriptions()->count();
+            }
         }
 
         return $this->render('chikowa/dashboard/index.html.twig', [

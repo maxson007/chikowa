@@ -17,6 +17,7 @@ require('select2');
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
 require('./js/membres')
+require('./js/tontine')
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');

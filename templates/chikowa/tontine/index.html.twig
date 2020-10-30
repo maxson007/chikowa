@@ -42,8 +42,30 @@
                                             <span class="badge badge-secondary">{{ tontine.inscriptions|length }}</span>
                                         </td>
                                         <td>
-                                            <a href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">show</a>
-                                            <a href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">edit</a>
+                                            <div class="btn-group-sm">
+                                            <a class="btn btn-sm btn-orange" href="{{ path('chikowa_tontine_show', {'id': tontine.id}) }}">
+                                                voir
+                                            </a>
+                                            <a class="btn btn-sm btn-outline-success" href="{{ path('chikowa_tontine_edit', {'id': tontine.id}) }}">modifier</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top-style:hidden;">
+                                        <td colspan="6" class="text-right">
+                                            {% if not association.tontines.empty %}
+                                                <button data-tontine="{{ tontine.id }}"
+                                                        data-tontine-libelle="{{ tontine.libelle }}"
+                                                        data-association="{{ association.id  }}"
+                                                        data-url="{{ path('chikowa_inscription_liste', {'id': tontine.id}) }}"
+                                                        data-association-libelle="{{ association.libelle }}"
+                                                        data-toggle="modal" data-target="#modal-afficher-participants-tontine"
+                                                        class="btn rounded-pill btn-outline-info">
+                                                    <i class="fas fa-user-friends"></i> Afficher les participants
+                                                </button>
+                                                <a class="btn rounded-pill btn-info" href="{{ path('chikowa_inscription_new',{'id':tontine.id }) }}">
+                                                    <i class="fas fa-user-plus"></i> Inscrire un membre
+                                                </a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% else %}
@@ -55,14 +77,6 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="6" class="text-right">
-                                        {% if not association.tontines.empty %}
-                                        <a class="btn rounded-pill btn-outline-info" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
-                                            <i class="fas fa-user-friends"></i> Afficher les participants
-                                        </a>
-                                        <a class="btn rounded-pill btn-info" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
-                                            <i class="fas fa-user-plus"></i> Ajouter un participant
-                                        </a>
-                                        {% endif %}
                                         <a class="btn rounded-pill btn-orange" href="{{ path('chikowa_tontine_creation_association',{'id':association.id }) }}">
                                             <i class="fa fa-euro-sign"></i> Creer une nouvelle tontine
                                         </a>
@@ -75,6 +89,27 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-afficher-participants-tontine" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-orange" id="modalLabel">Participant tontine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

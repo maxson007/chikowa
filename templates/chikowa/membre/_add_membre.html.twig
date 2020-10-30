@@ -9,8 +9,8 @@
         <th>actions</th>
     </tr>
     </thead>
-    <tbody class="membres" data-prototype="{{ _macro_prototype_form.printMembreFormRow(form.membres.vars.prototype)|e('html_attr') }}">
-    {% for membreForm in form.membres %}
+    <tbody class="membres" data-prototype="{{ _macro_prototype_form.printMembreFormRow(form.inscriptions.vars.prototype)|e('html_attr') }}">
+    {% for membreForm in form.inscriptions %}
     <tr class="js-membre-item">
        {{ _macro_prototype_form.printMembreFormRow(membreForm) }}
     </tr>

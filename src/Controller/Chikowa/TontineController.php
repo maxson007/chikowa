@@ -5,10 +5,12 @@ namespace App\Controller\Chikowa;
 use App\Entity\Chikowa\Association;
 use App\Entity\Chikowa\Tontine;
 use App\Entity\ChikowaUser;
+use App\Form\Chikowa\TontineAddMembreType;
 use App\Form\Chikowa\TontineEditType;
 use App\Form\Chikowa\TontineType;
 use App\Repository\Chikowa\TontineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -102,5 +104,34 @@ class TontineController extends AbstractController
         }
 
         return $this->redirectToRoute('chikowa_tontine_index');
+    }
+
+
+    /**
+     * @param Request $request
+     * @param Tontine $tontine
+     * @return RedirectResponse|Response
+     * @Route(path="/{id}/membre/new" , name="chikowa_tontine_add_membre")
+     */
+    public function addMembre(Request $request, Tontine $tontine)
+    {
+
+        $form = $this->createForm(TontineAddMembreType::class, $tontine);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($tontine);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                sprintf("Membre enregistré avec succès")
+            );
+            return $this->redirectToRoute('chikowa_membre_index');
+        }
+
+        return $this->render('chikowa/membre/new_membre.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

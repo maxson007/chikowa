@@ -4,20 +4,21 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="h3 text-orange">Les Membres  par associations</h1>
+    <h1 class="h3 text-orange">Les Membres  par tontines</h1>
     <div class="accordion" id="accordionAssociation">
         {% for association in associations %}
+        {% for tontine in association.tontines %}
         <div class="card">
             <div class="card-header bg-orange d-flex justify-content-between" id="heading-{{ association.id }}">
                 <h3 class="mb-0 w-100">
-                    <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ association.id }}" aria-expanded="true" aria-controls="collapse-{{ association.id }}">
-                        {{ association.libelle }}
+                    <a class="text-light btn-block text-left text-decoration-none" type="button" data-toggle="collapse" data-target="#collapse-{{ tontine.id }}" aria-expanded="true" aria-controls="collapse-{{ tontine.id }}">
+                        {{ tontine.libelle }}
                     </a>
                 </h3>
-                <a href="{{ path('chikowa_association_add_membre',{'id': association.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill"><i class="fa fa-user-plus"> </i></a>
+                <a href="{{ path('chikowa_tontine_add_membre',{'id': tontine.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill"><i class="fa fa-user-plus"> </i></a>
             </div>
 
-            <div id="collapse-{{ association.id }}" class="collapse {{ associations.first.id==association.id? "show" }}" aria-labelledby="heading-{{ association.id }}" data-parent="#accordionAssociation">
+            <div id="collapse-{{ tontine.id }}" class="collapse {{ association.tontines.first.id==tontine.id? "show" }}" aria-labelledby="heading-{{ tontine.id }}" data-parent="#accordionAssociation">
                 <div class="card-body">
 
                     <table class="table table-hover table">
@@ -31,14 +32,14 @@
                         </thead>
                         <tbody>
 
-                        {% for membre in association.membres %}
+                        {% for inscription in tontine.inscriptions %}
                             <tr>
-                                <td>{{ membre.nom }}</td>
-                                <td>{{ membre.telephone }}</td>
+                                <td>{{ inscription.membre.nom }}</td>
+                                <td>{{ inscription.membre.telephone }}</td>
                                 <td>
-                                    {% for inscription in membre.inscriptions %}
+                                    {% for participations in inscription.membre.inscriptions %}
                                     <span class="badge badge-pill badge-success">
-                                        {{ inscription.tontine.libelle }}
+                                        {{ participations.tontine.libelle }}
                                     </span>
                                     {% else %}
                                     <span class="badge badge-pill badge-warning">
@@ -47,13 +48,13 @@
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    <a href="{{ path('chikowa_membre_show', {'id': membre.id}) }}" class="btn btn-outline-orange">
+                                    <a href="{{ path('chikowa_membre_show', {'id': inscription.membre.id}) }}" class="btn btn-outline-orange">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a href="{{ path('chikowa_membre_edit', {'id': membre.id}) }}" class="js-edit-membre btn btn-outline-warning">
+                                    <a href="{{ path('chikowa_membre_edit', {'id': inscription.membre.id}) }}" class="js-edit-membre btn btn-outline-warning">
                                         <i class="fas fa-user-edit"></i>
                                     </a>
-                                    <a href="{{ path('chikowa_membre_delete', {'id': membre.id}) }}" class="js-edit-membre btn btn-danger">
+                                    <a href="{{ path('chikowa_membre_delete', {'id': inscription.membre.id}) }}" class="js-edit-membre btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -65,11 +66,21 @@
                         {% endfor %}
 
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <a href="{{ path('chikowa_tontine_add_membre',{'id': tontine.id}) }}" class="btn btn-orange align-self-center float-right rounded-pill">
+                                    <i class="fa fa-user-plus"> </i> Inscrire un Membre
+                                </a>
+                            </td>
+                        </tr>
+                        </tfoot>
                     </table>
 
                 </div>
             </div>
         </div>
+        {% endfor %}
         {% endfor %}
     </div>
 </div>

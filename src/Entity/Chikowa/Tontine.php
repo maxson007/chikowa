@@ -72,7 +72,7 @@ class Tontine
     private $association;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="tontine")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="tontine",cascade={"persist"}))
      */
     private $inscriptions;
 
@@ -167,8 +167,8 @@ class Tontine
     public function addInscription(Inscription $inscription): self
     {
         if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions[] = $inscription;
             $inscription->setTontine($this);
+            $this->inscriptions[] = $inscription;
         }
 
         return $this;
@@ -199,4 +199,8 @@ class Tontine
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->libelle;
+    }
 }

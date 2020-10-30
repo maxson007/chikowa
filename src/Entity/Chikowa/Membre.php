@@ -34,19 +34,14 @@ class Membre
      */
     private $telephone;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Association::class, mappedBy="membres")
-     */
-    private $associations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="membre")
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="membre",cascade={"persist"}))
      */
     private $inscriptions;
 
     public function __construct()
     {
-        $this->associations = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
     }
 
@@ -80,34 +75,6 @@ class Membre
     }
 
     /**
-     * @return Collection|Association[]
-     */
-    public function getAssociations(): Collection
-    {
-        return $this->associations;
-    }
-
-    public function addAssociation(Association $association): self
-    {
-        if (!$this->associations->contains($association)) {
-            $this->associations[] = $association;
-            $association->addMembre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAssociation(Association $association): self
-    {
-        if ($this->associations->contains($association)) {
-            $this->associations->removeElement($association);
-            $association->removeMembre($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Inscription[]
      */
     public function getInscriptions(): Collection
@@ -136,5 +103,10 @@ class Membre
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 }

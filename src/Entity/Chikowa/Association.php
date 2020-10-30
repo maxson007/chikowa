@@ -66,12 +66,6 @@ class Association
     private $gestionaires;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Membre::class, inversedBy="associations",cascade={"persist"})
-     * @Assert\Valid()
-     */
-    private $membres;
-
-    /**
      * @ORM\Column(type="string", length=30)
      */
     private $placeId;
@@ -84,7 +78,6 @@ class Association
     public function __construct()
     {
         $this->gestionaires = new ArrayCollection();
-        $this->membres = new ArrayCollection();
         $this->tontines = new ArrayCollection();
     }
 
@@ -154,32 +147,6 @@ class Association
     {
         if ($this->gestionaires->contains($gestionaire)) {
             $this->gestionaires->removeElement($gestionaire);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Membre[]
-     */
-    public function getMembres(): Collection
-    {
-        return $this->membres;
-    }
-
-    public function addMembre(Membre $membre): self
-    {
-        if (!$this->membres->contains($membre)) {
-            $this->membres[] = $membre;
-        }
-
-        return $this;
-    }
-
-    public function removeMembre(Membre $membre): self
-    {
-        if ($this->membres->contains($membre)) {
-            $this->membres->removeElement($membre);
         }
 
         return $this;

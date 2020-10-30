@@ -17,9 +17,9 @@
                             </h5>
                             <p class="card-text">  {{ association.getTypeEntiteLibelle }}</p>
                             <div class="float-right">
-                                {% set nombreMembre= association.membres|length  %}
+                                {% set nombreTontines= association.tontines|length  %}
                                 {% set nombreGestionaire= association.gestionaires|length  %}
-                                <span class="badge badge-warning badge-pill"> {{ "%count% membre|%count% membres"|trans({"%count%":nombreMembre}) }} </span>
+                                <span class="badge badge-warning badge-pill"> {{ "%count% tontine|%count% tontines"|trans({"%count%":nombreTontines}) }} </span>
                                 <span class="badge badge-success badge-pill"> {{ "%count% getionaire|%count% getionaires"|trans({"%count%":nombreGestionaire}) }} </span>
                             </div>
 

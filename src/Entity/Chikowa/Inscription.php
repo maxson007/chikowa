@@ -2,8 +2,11 @@
 
 namespace App\Entity\Chikowa;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Chikowa\InscriptionRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=InscriptionRepository::class)
@@ -12,20 +15,22 @@ class Inscription
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="string")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Membre::class, inversedBy="inscriptions")
+     * @ORM\ManyToOne(targetEntity=Membre::class, inversedBy="inscriptions", fetch="EAGER",cascade={"persist"}))
      * @ORM\JoinColumn(nullable=false)
+     *  @Assert\Valid()
      */
     private $membre;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tontine::class, inversedBy="inscriptions")
+     * @ORM\ManyToOne(targetEntity=Tontine::class, inversedBy="inscriptions",fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $tontine;
 
@@ -34,7 +39,12 @@ class Inscription
      */
     private $dateCreation;
 
-    public function getId(): ?int
+    public function __construct()
+    {
+        $this->dateCreation = new DateTime();
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }

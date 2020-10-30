@@ -1,11 +1,13 @@
 {% macro printMembreFormRow(membreForm) %}
         <td>
-            {{ form_widget(membreForm.nom,{'attr':{'placeholder': 'Mariama','disabled':false},'label':false}) }}
-            {{ form_errors(membreForm.nom) }}
+            {{ form_widget(membreForm.tontine,{'label':false}) }}
+
+            {{ form_widget(membreForm.membre.nom,{'attr':{'placeholder': 'Mariama'},'label':false}) }}
+            {{ form_errors(membreForm.membre.nom) }}
         </td>
         <td>
-            {{ form_widget(membreForm.telephone,{'attr':{'placeholder': '0033 06 56 667 666','disabled':false},'label':false}) }}
-            {{ form_errors(membreForm.telephone) }}
+          {{ form_widget(membreForm.membre.telephone,{'attr':{'placeholder': '0033 06 56 667 666'},'label':false}) }}
+            {{ form_errors(membreForm.membre.telephone) }}
         </td>
         <td>
 {#            <a href="#" class="js-edit-membre btn btn-outline-warning">
