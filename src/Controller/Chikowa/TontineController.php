@@ -22,6 +22,8 @@ class TontineController extends AbstractController
 {
     /**
      * @Route("/", name="chikowa_tontine_index", methods={"GET"})
+     * @param TontineRepository $tontineRepository
+     * @return Response
      */
     public function index(TontineRepository $tontineRepository): Response
     {
@@ -61,6 +63,8 @@ class TontineController extends AbstractController
 
     /**
      * @Route("/{id}", name="chikowa_tontine_show", methods={"GET"})
+     * @param Tontine $tontine
+     * @return Response
      */
     public function show(Tontine $tontine): Response
     {
@@ -94,6 +98,9 @@ class TontineController extends AbstractController
 
     /**
      * @Route("/{id}", name="chikowa_tontine_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Tontine $tontine
+     * @return Response
      */
     public function delete(Request $request, Tontine $tontine): Response
     {
@@ -115,7 +122,6 @@ class TontineController extends AbstractController
      */
     public function addMembre(Request $request, Tontine $tontine)
     {
-
         $form = $this->createForm(TontineAddMembreType::class, $tontine);
         $form->handleRequest($request);
         $lastInscription=$tontine->getInscriptions()->last();

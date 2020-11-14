@@ -3,13 +3,17 @@
 namespace App\Controller\Chikowa;
 
 use App\Entity\Chikowa\Membre;
+use App\Entity\Chikowa\Tontine;
 use App\Entity\ChikowaUser;
 use App\Form\Chikowa\MembreType;
+use App\Repository\Chikowa\InscriptionRepository;
 use App\Repository\Chikowa\MembreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/chikowa/membre")
@@ -93,5 +97,24 @@ class MembreController extends AbstractController
         }
 
         return $this->redirectToRoute('chikowa_membre_index');
+    }
+
+    /**
+     * @param Tontine $tontine
+     * @param MembreRepository $membreRepository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     * @Route("/tontine/{id}", name="chikowa_inscription_liste", methods={"GET"})
+     */
+    public function listeMembre( Tontine $tontine, MembreRepository $membreRepository,SerializerInterface $serializer)
+    {
+
+        $membre = $membreRepository->createQueryBuilder("membre")
+            ->leftJoin("membre.inscriptions", "inscription")
+            ->addSelect("inscription")
+        ->where("inscription.tontine = :tontine")
+        ->setParameter(":tontine", $tontine)
+            ->getQuery()->getResult();
+        return new JsonResponse($serializer->serialize($membre, 'json'));
     }
 }

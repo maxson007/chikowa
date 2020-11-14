@@ -32,21 +32,6 @@ class InscriptionController extends AbstractController
     }
 
     /**
-     * @param Tontine $tontine
-     * @param InscriptionRepository $inscriptionRepository
-     * @param SerializerInterface $serializer
-     * @return JsonResponse
-     * @Route("/tontine/{id}", name="chikowa_inscription_liste", methods={"GET"})
-     */
-    public function listeMembre( Tontine $tontine, InscriptionRepository $inscriptionRepository,SerializerInterface $serializer){
-
-       $inscription= $inscriptionRepository->findBy([
-            'tontine'=>$tontine
-        ]);
-       return new JsonResponse($serializer->serialize($inscription, 'json'));
-    }
-
-    /**
      * @Route("/tontine/{id}/new", name="chikowa_inscription_new", methods={"GET","POST"})
      * @param Tontine $tontine
      * @param Request $request

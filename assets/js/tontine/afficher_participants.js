@@ -20,5 +20,5 @@ $buttonModal.on('show.bs.modal', function (event) {
     let modal = $(this)
     console.log(url);
     modal.find('.modal-title').text(tontineLibelle+' : Participants')
-    modal.find('.modal-body input').val(tontine)
+    modal.find('.modal-body ').val(tontine)
 })
